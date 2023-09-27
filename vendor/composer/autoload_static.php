@@ -352,8 +352,8 @@ class ComposerStaticInitb3e58e759043a03e51e1c5297a2ba0b0
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -525,7 +525,16 @@ class ComposerStaticInitb3e58e759043a03e51e1c5297a2ba0b0
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\JenisPohonController' => __DIR__ . '/../..' . '/app/Http/Controllers/JenisPohonController.php',
+        'App\\Http\\Controllers\\KawasanController' => __DIR__ . '/../..' . '/app/Http/Controllers/KawasanController.php',
+        'App\\Http\\Controllers\\KelompokTanamanController' => __DIR__ . '/../..' . '/app/Http/Controllers/KelompokTanamanController.php',
+        'App\\Http\\Controllers\\PengelolaController' => __DIR__ . '/../..' . '/app/Http/Controllers/PengelolaController.php',
+        'App\\Http\\Controllers\\PohonController' => __DIR__ . '/../..' . '/app/Http/Controllers/PohonController.php',
+        'App\\Http\\Controllers\\StatusKawsanController' => __DIR__ . '/../..' . '/app/Http/Controllers/StatusKawsanController.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -536,6 +545,12 @@ class ComposerStaticInitb3e58e759043a03e51e1c5297a2ba0b0
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Models\\Jenis_pohon' => __DIR__ . '/../..' . '/app/Models/Jenis_pohon.php',
+        'App\\Models\\Kawasan' => __DIR__ . '/../..' . '/app/Models/Kawasan.php',
+        'App\\Models\\Kelompok_tanaman' => __DIR__ . '/../..' . '/app/Models/Kelompok_tanaman.php',
+        'App\\Models\\Pengelola' => __DIR__ . '/../..' . '/app/Models/Pengelola.php',
+        'App\\Models\\Pohon' => __DIR__ . '/../..' . '/app/Models/Pohon.php',
+        'App\\Models\\Status_kawasan' => __DIR__ . '/../..' . '/app/Models/Status_kawasan.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

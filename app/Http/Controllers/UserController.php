@@ -53,7 +53,7 @@ class UserController extends Controller
             'no.integer' => 'No. Hp Harus Berupa Angka (0-9).',
             'no.min_digits' => 'No. Hp Minimal Mempunyai 9 Digit.',
             'image.max' => 'Foto maksimal berukuran 2 mb.',
-            'image.mimes' => 'Foto harus bertipe jpg/jpeg/pdf.',
+            'image.mimes' => 'Foto harus bertipe jpg/jpeg/png.',
         ]);
         
         $validate['image'] = $request->file('image')->store('image-users');

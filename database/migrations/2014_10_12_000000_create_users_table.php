@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('alamat', 100)->required();
             $table->string('no', 15)->required();
             $table->string('instagram', 50)->required();
-            $table->string('role', 1)->required();
-            $table->string('image', 150)->required();
+            $table->string('role', 1)->default('2')->required();
+            $table->string('image', 150);
             $table->rememberToken();
             $table->timestamps();
         });

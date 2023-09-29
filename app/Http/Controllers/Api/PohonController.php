@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Pohon;
-use App\Models\Pengelola;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class PengelolaController extends Controller
+class PohonController extends Controller
 {
     public function index()
     {
         try {
-            $data = Pengelola::all();
+            $data = Pohon::with(['jenis_pohon:id,nama,deskripsi,kelompok_tanaman_id,image', 'jenis_pohon.kelompok_tanaman:id,nama', 'kawasan:id,nama', 'status_kawasan:id,nama', 'pengelola:id,nama'])->get();
             return response()->json([
                 'message' => 'success',
                 'data' => $data
@@ -29,7 +28,12 @@ class PengelolaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|unique:pengelolas'
+            'jenis_pohon_id' => 'required',
+            'kawasan_id' => 'required',
+            'status_kawasan_id' => 'required',
+            'umur_pohon' => 'required|integer',
+            'pengelola_id' => 'required',
+            'koordinat' => 'required',
         ]);
         if($validator->fails()) {
             return response()->json([
@@ -40,11 +44,29 @@ class PengelolaController extends Controller
 
         DB::beginTransaction();
         try {
-            $kawasan = Pengelola::create(['nama' => $request->nama]);
+            $pohon = Pohon::latest()->first();
+            $kode = "A1-B-RTHP-C1-";
+            if($pohon == null) {
+                $nomor_urut = '00001';
+            } else {
+                $explode =  explode('-', $pohon->kode_pohon);
+                $nomor_urut = intval($explode[4]) + 1;
+                $nomor_urut = str_pad($nomor_urut, 5, "0", STR_PAD_LEFT);
+            }
+            $kode_pohon = $kode.$nomor_urut;
+            $pohon = Pohon::create([
+                'jenis_pohon_id' => $request->jenis_pohon_id,
+                'kawasan_id' => $request->kawasan_id,
+                'status_kawasan_id' => $request->status_kawasan_id,
+                'kode_pohon' => $kode_pohon,
+                'umur_pohon' => $request->umur_pohon,
+                'pengelola_id' => $request->pengelola_id,
+                'koordinat' => $request->koordinat,
+            ]);
             DB::commit();
             return response()->json([
                 'message' => 'success',
-                'data' => $kawasan
+                'data' => $pohon
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -54,12 +76,12 @@ class PengelolaController extends Controller
         }
     }
 
-    public function show(Pengelola $pengelola)
+    public function show(Pohon $pohon)
     {
-        if($pengelola !== null) {
+        if($pohon !== null) {
             return response()->json([
                 'message' => 'success',
-                'data' => $pengelola
+                'data' => $pohon
             ]);
         } else {
             return response()->json([
@@ -68,14 +90,16 @@ class PengelolaController extends Controller
         }
     }
 
-    public function update(Request $request, Pengelola $pengelola)
+    public function update(Request $request, Pohon $pohon)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required'
+            'jenis_pohon_id' => 'required',
+            'kawasan_id' => 'required',
+            'status_kawasan_id' => 'required',
+            'umur_pohon' => 'required|integer',
+            'pengelola_id' => 'required',
+            'koordinat' => 'required',
         ]);
-        if($request->nama != $pengelola->nama) {
-            $validator->addRules(['nama' => 'required|unique:pengelolas']);
-        }
         if($validator->fails()) {
             return response()->json([
                 'message' => $validator->getMessageBag()
@@ -84,12 +108,19 @@ class PengelolaController extends Controller
 
         DB::beginTransaction();
         try {
-            $pengelola->update(['nama' => $request->nama]);
+            $pohon->update([
+                'jenis_pohon_id' => $request->jenis_pohon_id,
+                'kawasan_id' => $request->kawasan_id,
+                'status_kawasan_id' => $request->status_kawasan_id,
+                'umur_pohon' => $request->umur_pohon,
+                'pengelola_id' => $request->pengelola_id,
+                'koordinat' => $request->koordinat,
+            ]);
             
             DB::commit();
             return response()->json([
                 'message' => 'success',
-                'data' => $pengelola
+                'data' => $pohon
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -99,9 +130,9 @@ class PengelolaController extends Controller
         }
     }
 
-    public function destroy(Pengelola $pengelola)
+    public function destroy(Pohon $pohon)
     {
-        if(!$pengelola) {
+        if(!$pohon) {
             return response()->json([
                 'message' => 'data tidak di temukan'
             ], 404);
@@ -109,17 +140,11 @@ class PengelolaController extends Controller
 
         DB::beginTransaction();
         try {
-            $relasi = Pohon::select('pengelola_id')->where('pengelola_id', $pengelola->id)->count();
-            if($relasi > 0) {
-                return response()->json([
-                    'message' => 'data telah di pakai di data pohon, tidak bisa di hapus'
-                ]);
-            } 
-            $pengelola->delete();
+            $pohon->delete();
             DB::commit();
             return response()->json([
                 'message' => 'success',
-                'data' => $pengelola
+                'data' => $pohon
             ]);
         } catch (\Throwable $th) {
             DB::rollBack();

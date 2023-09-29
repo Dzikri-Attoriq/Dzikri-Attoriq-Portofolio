@@ -1,10 +1,12 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Kelompok_tanaman;
+use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Kelompok_tanaman;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -52,6 +54,14 @@ class DatabaseSeeder extends Seeder
             'nama' => 'sepuluh',
         ]);
 
-
+        User::create([
+            'nama' => 'John Doe',
+            'email' => 'johndoe@gmail.com',
+            'password' => Hash::make('12345'),
+            'alamat' => 'Siradj Salman',
+            'no' => '089605029040',
+            'instagram' => 'john_doe',
+            'image' => 'default/foto.jpg',
+        ]);
     }
 }

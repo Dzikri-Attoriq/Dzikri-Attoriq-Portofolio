@@ -15,7 +15,7 @@ class JenisPohonController extends Controller
     public function index()
     {
         try {
-            $data = Jenis_pohon::with('kelompok_tanaman')->get();
+            $data = Jenis_pohon::with('kelompok_tanaman:id,nama')->get();
             return response()->json([
                 'message' => 'success',
                 'data' => $data

@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\JenisPohonController;
 use App\Http\Controllers\Api\KawasanController;
 use App\Http\Controllers\Api\KelompokTanamanController;
+use App\Http\Controllers\Api\PengelolaController;
+use App\Http\Controllers\Api\PohonController;
 use App\Http\Controllers\Api\StatusKawasanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,11 +61,19 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     });
 
     Route::group(['prefix' => 'data-pengelola'], function() {
-        Route::get('/', [StatusKawasanController::class, 'index']);
-        Route::post('/tambah', [StatusKawasanController::class, 'store']);
-        Route::get('/{pengelola}', [StatusKawasanController::class, 'show']);
-        Route::post('/{pengelola}/edit', [StatusKawasanController::class, 'update']);
-        Route::post('/{pengelola}/hapus', [StatusKawasanController::class, 'destroy']);
+        Route::get('/', [PengelolaController::class, 'index']);
+        Route::post('/tambah', [PengelolaController::class, 'store']);
+        Route::get('/{pengelola}', [PengelolaController::class, 'show']);
+        Route::post('/{pengelola}/edit', [PengelolaController::class, 'update']);
+        Route::post('/{pengelola}/hapus', [PengelolaController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'data-pohon'], function() {
+        Route::get('/', [PohonController::class, 'index']);
+        Route::post('/tambah', [PohonController::class, 'store']);
+        Route::get('/{pohon}', [PohonController::class, 'show']);
+        Route::post('/{pohon}/edit', [PohonController::class, 'update']);
+        Route::post('/{pohon}/hapus', [PohonController::class, 'destroy']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

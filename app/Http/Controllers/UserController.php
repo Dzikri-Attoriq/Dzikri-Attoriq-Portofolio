@@ -32,7 +32,7 @@ class UserController extends Controller
             'no' => 'required|integer|unique:users|min_digits:9',
             'instagram' => 'required',
             'role' => 'required',
-            'image' => 'required|image|file|max:2024|mimes:jpg,jpeg,png',
+            'image' => 'image|file|max:2024|mimes:jpg,jpeg,png',
         ];
 
         $validate = $request->validate($rules, [
@@ -55,9 +55,12 @@ class UserController extends Controller
             'image.max' => 'Foto maksimal berukuran 2 mb.',
             'image.mimes' => 'Foto harus bertipe jpg/jpeg/png.',
         ]);
-        
-        $validate['image'] = $request->file('image')->store('image-users');
-        $validate['password'] = Hash::make($request->no);
+
+        if($request->file('image')) {
+            $validate['image'] = $request->file('image')->store('image-users');
+        } else {
+            $validate['image'] = 'default/foto.jpg';
+        }
 
         User::create($validate);
         return redirect('/user')->with('success', 'Berhasil menambahkan Data User');
@@ -124,7 +127,9 @@ class UserController extends Controller
         }
 
         if($request->file('image')) {
-            Storage::delete($user->image);
+            if($user->image != 'default/foto.jpg') {
+                Storage::delete($user->image);
+            }
             $validate['image'] = $request->file('image')->store('image-users');
         }
 
@@ -134,7 +139,9 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        Storage::delete($user->image);
+        if($user->image != 'default/foto.jpg') {
+            Storage::delete($user->image);
+        }
         User::findOrFail($user->id)->delete();
         return redirect()->back()->with('success', "Berhasil hapus Data User");
     }

@@ -28,11 +28,8 @@ class AuthController extends Controller
                 return redirect('/');
             } else {
                 Auth::logout();
-     
                 $request->session()->invalidate();
-             
                 $request->session()->regenerateToken();
-             
                 return redirect('login');
             }
         }

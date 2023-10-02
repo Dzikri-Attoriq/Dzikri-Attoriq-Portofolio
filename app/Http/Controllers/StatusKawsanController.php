@@ -26,11 +26,11 @@ class StatusKawsanController extends Controller
         $validate = $request->validate([
             'nama' => 'required|unique:status_kawasans',
         ], [
-            'nama.required' => 'Status Kawasan Wajib Di Isi.',
-            'nama.unique' => 'Status Kawasan Telah di-tambahkan, Silahkan Ganti.',
+            'nama.required' => 'Kolom status kawasan wajib di isi.',
+            'nama.unique' => 'Kolom status kawasan telah di pakai, silahkan ganti.',
         ]);
         Status_kawasan::create($validate);
-        return redirect('/status-kawasan')->with('success', "Berhasil menambahkan Data Kawasan ");
+        return redirect('/status-kawasan')->with('success', "Berhasil menambahkan status kawasan ");
     }
 
     public function show(Status_kawasan $status_kawasan)
@@ -47,28 +47,26 @@ class StatusKawsanController extends Controller
 
     public function update(Request $request, Status_kawasan $status_kawasan)
     {
-        $rules = [];
+        $rules = ['nama' => 'required'];
         if($request->nama != $status_kawasan->nama) {
             $rules['nama'] = 'required|unique:status_kawasans';
-        } else {
-            $rules['nama'] = 'required';
-        }
+        } 
         $validate = $request->validate($rules, [
-            'nama.required' => 'Status Kawasan Wajib Di Isi.',
-            'nama.unique' => 'Status Kawasan Telah di-tambahkan, Silahkan Ganti.',
+            'nama.required' => 'Kolom status kawasan wajib di isi.',
+            'nama.unique' => 'Kolom status kawasan telah di pakai, silahkan ganti.',
         ]);
-        Status_kawasan::where('nama', $status_kawasan->nama)->update($validate);
-        return redirect('/status-kawasan')->with('success', "Berhasil edit Status Kawasan");
+        $status_kawasan->update($validate);
+        return redirect('/status-kawasan')->with('success', "Berhasil edit status kawasan");
     }
 
     public function destroy(Status_kawasan $status_kawasan)
     {
         $relasi = Pohon::select('status_kawasan_id')->where('status_kawasan_id', $status_kawasan->id)->count();
         if($relasi > 0) {
-            return redirect()->back()->with('relasi', "Data telah di pakai di Data Pohon, Tidak bisa di-Hapus!");
+            return redirect()->back()->with('relasi', "Data telah di pakai di data pohon, tidak bisa di-hapus!");
         } else {
-            Status_kawasan::findOrFail($status_kawasan->id)->delete();
-            return redirect()->back()->with('success', "Berhasil hapus Status Kawasan");
+            $status_kawasan->delete();
+            return redirect()->back()->with('success', "Berhasil hapus status kawasan");
         }
     }
 }

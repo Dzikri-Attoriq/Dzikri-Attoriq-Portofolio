@@ -46,14 +46,6 @@ class PohonController extends Controller
             'umur_pohon' => 'required|integer',
             'pengelola_id' => 'required',
             'koordinat' => 'required',
-        ], [
-            'jenis_pohon_id.required' => 'Jneis Pohon Wajib Di Isi.',
-            'kawasan_id.required' => 'Kawasan Wajib Di Isi.',
-            'status_kawasan_id.required' => 'Status Kawasan Wajib Di Isi.',
-            'umur_pohon.required' => 'Umur Pohon Wajib Di Isi.',
-            'pengelola_id.required' => 'Pengelola Wajib Di Isi.',
-            'koordinat.required' => 'Koordinat Wajib Di Isi.',
-            'umur_pohon.integer' => 'Umur Pohon Harus Berupa Angka.',
         ]);
         
         $pohon = Pohon::latest()->first();
@@ -68,7 +60,7 @@ class PohonController extends Controller
         $validate['kode_pohon'] = $kode_pohon.$nomor_urut;
         
         Pohon::create($validate);
-        return redirect('/data-pohon')->with('success', "Berhasil menambahkan Data Pohon");
+        return redirect('/data-pohon')->with('success', "Berhasil menambahkan data pohon");
     }
 
     public function show(Pohon $data_pohon)
@@ -96,23 +88,15 @@ class PohonController extends Controller
             'umur_pohon' => 'required|integer',
             'pengelola_id' => 'required',
             'koordinat' => 'required',
-        ], [
-            'jenis_pohon_id.required' => 'Jneis Pohon Wajib Di Isi.',
-            'kawasan_id.required' => 'Kawasan Wajib Di Isi.',
-            'status_kawasan_id.required' => 'Status Kawasan Wajib Di Isi.',
-            'umur_pohon.required' => 'Umur Pohon Wajib Di Isi.',
-            'pengelola_id.required' => 'Pengelola Wajib Di Isi.',
-            'koordinat.required' => 'Koordinat Wajib Di Isi.',
-            'umur_pohon.integer' => 'Umur Pohon Harus Berupa Angka.',
-        ]);
+        ],);
         
-        Pohon::where('kode_pohon', $data_pohon->kode_pohon)->update($validate);
-        return redirect('/data-pohon')->with('success', "Berhasil edit Data Pohon");
+        $data_pohon->update($validate);
+        return redirect('/data-pohon')->with('success', "Berhasil edit data pohon");
     }
 
     public function destroy(Pohon $data_pohon)
     {
-        Pohon::findOrFail($data_pohon->id)->delete();
-        return redirect()->back()->with('success', "Berhasil hapus Data Pohon");   
+        $data_pohon->delete();
+        return redirect()->back()->with('success', "Berhasil hapus data pohon");   
     }
 }

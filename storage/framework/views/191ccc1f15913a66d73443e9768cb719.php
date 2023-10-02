@@ -20,7 +20,7 @@
                         <form action="/kelompok-tanaman" method="POST">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
-                                <label for="nama">Kelompok Tanaman<span class="text-muted text-danger">*</span></label>
+                                <label for="nama">Nama Kelompok<span class="text-muted text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nama" name="nama"
                                     value="<?php echo e(old('nama')); ?>">
                                 <?php $__errorArgs = ['nama'];

@@ -26,11 +26,10 @@ class KawasanController extends Controller
         $validate = $request->validate([
             'nama' => 'required|unique:kawasans',
         ], [
-            'nama.required' => 'Nama Kawasan Wajib Di Isi.',
-            'nama.unique' => 'Nama Kawasan Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama kawasan telah di pakai, silahkan ganti.',
         ]);
         Kawasan::create($validate);
-        return redirect('/data-kawasan')->with('success', "Berhasil menambahkan Data Kawasan ");
+        return redirect('/data-kawasan')->with('success', "Berhasil menambahkan data kawasan ");
     }
 
     public function show(Kawasan $data_kawasan)
@@ -47,27 +46,24 @@ class KawasanController extends Controller
 
     public function update(Request $request, Kawasan $data_kawasan)
     {
-        $rules = [];
+        $rules = ['nama' => 'required'];
         if($request->nama != $data_kawasan->nama) {
             $rules['nama'] = 'required|unique:kawasans';
-        } else {
-            $rules['nama'] = 'required';
-        }
+        } 
         $validate = $request->validate($rules, [
-            'nama.required' => 'Nama Kawasan Wajib Di Isi.',
-            'nama.unique' => 'Nama Kawasan Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama kawasan telah di pakai, silahkan ganti.',
         ]);
-        Kawasan::where('nama', $data_kawasan->nama)->update($validate);
-        return redirect('/data-kawasan')->with('success', "Berhasil edit Data Kawasan");
+        $data_kawasan->update($validate);
+        return redirect('/data-kawasan')->with('success', "Berhasil edit data kawasan");
     }
 
     public function destroy(Kawasan $data_kawasan)
     {
         $relasi = Pohon::select('kawasan_id')->where('kawasan_id', $data_kawasan->id)->count();
         if($relasi > 0) {
-            return redirect()->back()->with('relasi', "Data telah di pakai di Data Pohon, Tidak bisa di-Hapus!");
+            return redirect()->back()->with('relasi', "Data telah di pakai di data pohon, tidak bisa di-hapus!");
         } else {
-            Kawasan::findOrFail($data_kawasan->id)->delete();
+            $data_kawasan->delete();
             return redirect()->back()->with('success', "Berhasil hapus Data Kawasan");
         }
     }

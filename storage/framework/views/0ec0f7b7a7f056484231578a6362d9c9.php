@@ -23,7 +23,7 @@
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
                             <div class="form-group">
-                                <label for="nama">Kelompok Tanaman<span class="text-muted text-danger">*</span></label>
+                                <label for="nama">Nama<span class="text-muted text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nama" name="nama"
                                     value="<?php echo e(old('nama', $data_jenis->nama)); ?>">
                                 <?php $__errorArgs = ['nama'];

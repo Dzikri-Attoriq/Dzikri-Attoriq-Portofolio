@@ -26,11 +26,10 @@ class PengelolaController extends Controller
         $validate = $request->validate([
             'nama' => 'required|unique:pengelolas',
         ], [
-            'nama.required' => 'Nama Pengelola Wajib Di Isi.',
-            'nama.unique' => 'Nama Pengelola Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama pengelola telah di pakai, silahkan ganti.',
         ]);
         Pengelola::create($validate);
-        return redirect('/data-pengelola')->with('success', "Berhasil menambahkan Data Pengelola ");
+        return redirect('/data-pengelola')->with('success', "Berhasil menambahkan data pengelola ");
     }
 
     public function show(Pengelola $data_pengelola)
@@ -47,28 +46,25 @@ class PengelolaController extends Controller
 
     public function update(Request $request, Pengelola $data_pengelola)
     {
-        $rules = [];
+        $rules = ['nama' => 'required'];
         if($request->nama != $data_pengelola->nama) {
             $rules['nama'] = 'required|unique:pengelolas';
-        } else {
-            $rules['nama'] = 'required';
-        }
+        } 
         $validate = $request->validate($rules, [
-            'nama.required' => 'Nama Pengelola Wajib Di Isi.',
-            'nama.unique' => 'Nama Pengelola Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama pengelola telah di pakai, silahkan ganti.',
         ]);
-        Pengelola::where('nama', $data_pengelola->nama)->update($validate);
-        return redirect('/data-pengelola')->with('success', "Berhasil edit Data Pengelola");
+        $data_pengelola->update($validate);
+        return redirect('/data-pengelola')->with('success', "Berhasil edit data pengelola");
     }
 
     public function destroy(Pengelola $data_pengelola)
     {
         $relasi = Pohon::select('pengelola_id')->where('pengelola_id', $data_pengelola->id)->count();
         if($relasi > 0) {
-            return redirect()->back()->with('relasi', "Data telah di pakai di Data Pohon, Tidak bisa di-Hapus!");
+            return redirect()->back()->with('relasi', "Data telah di pakai di data pohon, tidak bisa di-hapus!");
         } else {
-            Pengelola::findOrFail($data_pengelola->id)->delete();
-            return redirect()->back()->with('success', "Berhasil hapus Data Pengelola");
+            $data_pengelola->delete();
+            return redirect()->back()->with('success', "Berhasil hapus data pengelola");
         }
     }
 }

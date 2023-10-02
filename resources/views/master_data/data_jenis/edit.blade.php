@@ -23,7 +23,7 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="nama">Kelompok Tanaman<span class="text-muted text-danger">*</span></label>
+                                <label for="nama">Nama<span class="text-muted text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nama" name="nama"
                                     value="{{ old('nama', $data_jenis->nama) }}">
                                 @error('nama')

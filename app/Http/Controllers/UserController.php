@@ -26,34 +26,17 @@ class UserController extends Controller
     {
         $rules = [
             'nama' => 'required',
-            'email' => 'required|unique:users|min:5|email:dns',
-            'password' => 'required|min:5|confirmed',
+            'email' => 'required|unique:users|email:dns',
+            'password' => 'required|min_digits:5|confirmed',
             'alamat' => 'required',
             'no' => 'required|integer|unique:users|min_digits:9',
             'instagram' => 'required',
             'role' => 'required',
             'image' => 'image|file|max:2024|mimes:jpg,jpeg,png',
         ];
-
         $validate = $request->validate($rules, [
-            'nama.required' => 'Nama Wajib Di Isi.',
-            'email.required' => 'Email Wajib Di Isi.',
-            'password.required' => 'Password Wajib Di Isi.',
-            'alamat.required' => 'Alamat Wajib Di Isi.',
-            'no.required' => 'No. Hp Wajib Di Isi.',
-            'instagram.required' => 'Instagram Wajib Di Isi.',
-            'role.required' => 'Role Wajib Di Isi.',
-            'image.required' => 'Foto Wajib Di Isi.',
-            'email.min' => 'Email Minimal terdiri dari 5 karakter.',
-            'email.unique' => 'Email Telah di Pakai, Silahkan Ganti.',
-            'email.email' => 'Email harus merupakan email yang valid.',
-            'password.min' => 'Password Minimal terdiri dari 5 karakter.',
-            'password.confirmed' => 'Password dan Konfirmasi Password Tidak Sama.',
-            'no.unique' => 'No. Hp Telah di Pakai, Silahkan Ganti.',
-            'no.integer' => 'No. Hp Harus Berupa Angka (0-9).',
-            'no.min_digits' => 'No. Hp Minimal Mempunyai 9 Digit.',
-            'image.max' => 'Foto maksimal berukuran 2 mb.',
-            'image.mimes' => 'Foto harus bertipe jpg/jpeg/png.',
+            'email.unique' => 'Kolom email telah di pakai, silahkan ganti.',
+            'no.unique' => 'Kolom no. hp telah di pakai, silahkan ganti.',
         ]);
 
         if($request->file('image')) {
@@ -63,7 +46,7 @@ class UserController extends Controller
         }
 
         User::create($validate);
-        return redirect('/user')->with('success', 'Berhasil menambahkan Data User');
+        return redirect('/user')->with('success', 'Berhasil menambahkan data user');
     }
 
     public function show(User $user)
@@ -104,22 +87,8 @@ class UserController extends Controller
         }
 
         $validate = $request->validate($rules, [
-            'nama.required' => 'Nama Wajib Di Isi.',
-            'email.required' => 'Email Wajib Di Isi.',
-            'alamat.required' => 'Alamat Wajib Di Isi.',
-            'no.required' => 'No. Hp Wajib Di Isi.',
-            'instagram.required' => 'Instagram Wajib Di Isi.',
-            'role.required' => 'Role Wajib Di Isi.',
-            'email.min' => 'Email Minimal terdiri dari 5 karakter.',
-            'email.unique' => 'Email Telah di Pakai, Silahkan Ganti.',
-            'email.email' => 'Email harus merupakan email yang valid.',
-            'password.min' => 'Password Minimal terdiri dari 5 karakter.',
-            'password.confirmed' => 'Password dan Konfirmasi Password Tidak Sama.',
-            'no.unique' => 'No. Hp Telah di Pakai, Silahkan Ganti.',
-            'no.integer' => 'No. Hp Harus Berupa Angka (0-9).',
-            'no.min_digits' => 'No. Hp Minimal Mempunyai 9 Digit.',
-            'image.max' => 'Foto maksimal berukuran 2 mb.',
-            'image.mimes' => 'Foto harus bertipe jpg/jpeg/pdf.',
+            'email.unique' => 'Kolom email telah di pakai, silahkan ganti.',
+            'no.unique' => 'Kolom no. hp telah di pakai, silahkan ganti.',
         ]);
 
         if($request->password) {
@@ -133,8 +102,8 @@ class UserController extends Controller
             $validate['image'] = $request->file('image')->store('image-users');
         }
 
-        User::where('email', $user->email)->update($validate);
-        return redirect('/user')->with('success', 'Berhasil Edit Data User');
+        $user->update($validate);
+        return redirect('/user')->with('success', 'Berhasil edit data user');
     }
 
     public function destroy(User $user)
@@ -142,7 +111,7 @@ class UserController extends Controller
         if($user->image != 'default/foto.jpg') {
             Storage::delete($user->image);
         }
-        User::findOrFail($user->id)->delete();
-        return redirect()->back()->with('success', "Berhasil hapus Data User");
+        $user->delete();
+        return redirect()->back()->with('success', "Berhasil hapus data user");
     }
 }

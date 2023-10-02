@@ -90,7 +90,7 @@ return [
     'mac_address' => 'The :attribute field must be a valid MAC address.',
     'max' => [
         'array' => 'The :attribute field must not have more than :max items.',
-        'file' => 'The :attribute field must not be greater than :max kilobytes.',
+        'file' => 'Kolom :attribute tidak boleh lebih dari :max kilobytes.',
         'numeric' => 'The :attribute field must not be greater than :max.',
         'string' => 'The :attribute field must not be greater than :max characters.',
     ],
@@ -170,11 +170,27 @@ return [
         'no' => [
             'required' => 'Kolom no. hp wajib di isi.',
         ],
+        'kelompok_tanaman_id' => [
+            'required' => 'Kolom kelompok tanaman wajib di isi.',
+        ],
+        'jenis_pohon_id' => [
+            'required' => 'Kolom jenis pohon wajib di isi.',
+        ],
+        'kawasan_id' => [
+            'required' => 'Kolom kawasan wajib di isi.',
+        ],
+        'status_kawasan_id' => [
+            'required' => 'Kolom status kawasan wajib di isi.',
+        ],
+        'pengelola_id' => [
+            'required' => 'Kolom pengelola wajib di isi.',
+        ],
         'image' => [
             'required' => 'Kolom foto wajib di isi.',
             'image' => 'Kolom foto harus berupa gambar.',
             'file' => 'Kolom foto harus berupa file.',
             'mimes' => 'Kolom foto harus berupa file tipe: :values.',
+            'max' => 'Kolom foto tidak boleh lebih dari 2 mb.',
         ],
     ],
 

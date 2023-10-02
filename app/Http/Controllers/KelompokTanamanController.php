@@ -26,11 +26,10 @@ class KelompokTanamanController extends Controller
         $validate = $request->validate([
             'nama' => 'required|unique:kelompok_tanamans',
         ], [
-            'nama.required' => 'Kelompok Tanaman Wajib Di Isi.',
-            'nama.unique' => 'Kelompok Tanaman Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama kelompok telah di pakai, silahkan ganti.',
         ]);
         Kelompok_tanaman::create($validate);
-        return redirect('/kelompok-tanaman')->with('success', "Berhasil menambahkan Data Kelompok Tanaman ");
+        return redirect('/kelompok-tanaman')->with('success', "Berhasil menambahkan data kelompok tanaman ");
     }
 
     public function show(Kelompok_tanaman $kelompok_tanaman)
@@ -47,28 +46,25 @@ class KelompokTanamanController extends Controller
 
     public function update(Request $request, Kelompok_tanaman $kelompok_tanaman)
     {
-        $rules = [];
+        $rules = ['nama' => 'required'];
         if($request->nama != $kelompok_tanaman->nama) {
             $rules['nama'] = 'required|unique:kelompok_tanamans';
-        } else {
-            $rules['nama'] = 'required';
-        }
+        } 
         $validate = $request->validate($rules, [
-            'nama.required' => 'Kelompok Tanaman Wajib Di Isi.',
-            'nama.unique' => 'Kelompok Tanaman Telah di-tambahkan, Silahkan Ganti.',
+            'nama.unique' => 'Kolom nama kelompok telah di pakai, silahkan ganti.',
         ]);
-        Kelompok_tanaman::where('nama', $kelompok_tanaman->nama)->update($validate);
-        return redirect('/kelompok-tanaman')->with('success', "Berhasil edit Data Kelompok Tanaman");
+        $kelompok_tanaman->update($validate);
+        return redirect('/kelompok-tanaman')->with('success', "Berhasil edit data kelompok tanaman");
     }
 
     public function destroy(Kelompok_tanaman $kelompok_tanaman)
     {
         $relasi = Jenis_pohon::select('kelompok_tanaman_id')->where('kelompok_tanaman_id', $kelompok_tanaman->id)->count();
         if($relasi > 0) {
-            return redirect()->back()->with('relasi', "Data telah di pakai di Data Jenis Pohon, Tidak bisa di-Hapus!");
+            return redirect()->back()->with('relasi', "Data telah di pakai di data jenis pohon, tidak bisa di-hapus!");
         } else {
-            Kelompok_tanaman::findOrFail($kelompok_tanaman->id)->delete();
-            return redirect()->back()->with('success', "Berhasil hapus Data Kelompok Tanaman");
+            $kelompok_tanaman->delete();
+            return redirect()->back()->with('success', "Berhasil hapus data kelompok tanaman");
         }
     }
 }

@@ -1,0 +1,111 @@
+.vertical-menu {
+    overflow-y: auto;
+}
+.vertical-menu::-webkit-scrollbar {
+    width: 0; 
+}
+
+.content-3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 290;
+}
+.content-3 .card-header {
+    color: #2fc374;
+}
+.content-3 .text-end {
+    border-top: none; 
+}
+.content-3 .card-title {
+    font-weight: 420; 
+    color: black;
+}
+.content-3 .card-text {
+    font-weight: 290; 
+    color: black;
+}
+
+/* responsive */
+@media (max-width: 560px) {
+    .vertical-menu {
+        height: 330px;
+    }
+    .content-3 .card-header {
+        margin-bottom: -22px;
+        font-size: 12px;
+    }
+    .content-3 .card-title {
+        font-size: 14px;
+        margin-bottom: -2px;
+    }
+    .content-3 .card-text {
+        font-size: 12px; 
+        margin-bottom: -29px;
+    }
+    .content-3 button {
+        font-size: 10px
+    }
+}
+
+@media (min-width: 561px) and (max-width: 992px) {
+    .vertical-menu {
+        height: 280px;
+    }
+    .content-3 .card-header {
+        margin-bottom: -20px;
+        font-size: 14px;
+    }
+    .content-3 .card-title {
+        font-size: 16px;
+        margin-bottom: -2px;
+    }
+    .content-3 .card-text {
+        font-size: 14px; 
+        margin-bottom: -29px;
+    }
+    .content-3 button {
+        font-size: 12px
+    }
+    
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .vertical-menu {
+        height: 320px;
+    }
+    .content-3 .card-header {
+        margin-bottom: -17px;
+        font-size: 14;
+    }
+    .content-3 .card-title {
+        font-size: 18px;
+        margin-bottom: -2px;
+    }
+    .content-3 .card-text {
+        font-size: 14px; 
+        margin-bottom: -29px;
+    }
+    .content-3 button {
+        font-size: 12px
+    }
+}
+
+@media (min-width: 1201px) {
+    .vertical-menu {
+        height: 340px;
+    }
+    .content-3 .card-header {
+        margin-bottom: -15px;
+        font-size: 14px;
+    }
+    .content-3 .card-title {
+        font-size: 18px;
+        margin-bottom: -2px;
+    }
+    .content-3 .card-text {
+        font-size: 14px; 
+        margin-bottom: -29px;
+    }
+    .content-3 button {
+        font-size: 14px
+    }
+}

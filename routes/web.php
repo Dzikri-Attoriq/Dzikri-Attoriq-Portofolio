@@ -27,6 +27,9 @@ use App\Http\Controllers\PohonController;
 // });
 
 Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/user-dashboard', [DashboardController::class, 'user_dashboard'])->middleware('auth');
+Route::get('/scan', [DashboardController::class, 'scan'])->middleware('auth');
+Route::post('/validasi', [DashboardController::class, 'validasi'])->name('validasi')->middleware('auth');
 
 // route AuthController
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
@@ -50,6 +53,7 @@ Route::resource('/data-pengelola', PengelolaController::class)->middleware('auth
 
 // Route Data Pohon
 Route::resource('/data-pohon', PohonController::class)->middleware('auth');
+Route::get('/pilih-profil-pohon', [PohonController::class, 'profil_pohon'])->middleware('auth');
 
 // Route Data Pohon
 Route::resource('/user', UserController::class)->middleware('auth');

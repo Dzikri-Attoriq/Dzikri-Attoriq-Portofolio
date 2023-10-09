@@ -10,7 +10,7 @@ class AuthController extends Controller
     public function login()
     {
         $data['title'] = 'Login Page';
-        return view('login', $data);
+        return view('login/login', $data);
     }
 
     public function authenticate(Request $request)

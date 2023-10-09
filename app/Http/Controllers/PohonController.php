@@ -8,6 +8,7 @@ use App\Models\Pengelola;
 use App\Models\Pohon;
 use App\Models\Status_kawasan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PohonController extends Controller
 {
@@ -39,7 +40,7 @@ class PohonController extends Controller
 
     public function store(Request $request)
     {
-        $validate = $request->validate([
+        $validate = Validator::make($request->all(), [
             'jenis_pohon_id' => 'required',
             'kawasan_id' => 'required',
             'status_kawasan_id' => 'required',
@@ -47,6 +48,11 @@ class PohonController extends Controller
             'pengelola_id' => 'required',
             'koordinat' => 'required',
         ]);
+
+        if ($validate->fails()) {
+            // Jika validasi gagal, kirim pesan kesalahan dalam respons JSON
+            return response()->json(['errors' => $validate->errors()], 422);
+        }
         
         $pohon = Pohon::latest()->first();
         $kode_pohon = "A1-B-RTHP-C1-";
@@ -57,10 +63,19 @@ class PohonController extends Controller
             $nomor_urut = intval($explode[4]) + 1;
             $nomor_urut = str_pad($nomor_urut, 5, "0", STR_PAD_LEFT);
         }
-        $validate['kode_pohon'] = $kode_pohon.$nomor_urut;
+        $kode_pohon = $kode_pohon.$nomor_urut;
         
-        Pohon::create($validate);
-        return redirect('/data-pohon')->with('success', "Berhasil menambahkan data pohon");
+        Pohon::create([
+            'jenis_pohon_id' => $request->jenis_pohon_id,
+            'kawasan_id' => $request->kawasan_id,
+            'status_kawasan_id' => $request->status_kawasan_id,
+            'kode_pohon' => $kode_pohon,
+            'umur_pohon' => $request->umur_pohon,
+            'pengelola_id' => $request->pengelola_id,
+            'koordinat' => $request->koordinat,
+        ]);
+        // Jika berhasil, kirim respons JSON sukses
+        return response()->json(['message' => 'Berhasil menambahkan data pohon'], 200);
     }
 
     public function show(Pohon $data_pohon)
@@ -99,4 +114,20 @@ class PohonController extends Controller
         $data_pohon->delete();
         return redirect()->back()->with('success', "Berhasil hapus data pohon");   
     }
+
+    public function profil_pohon()
+    {
+        $data['title'] = "Pilih Profil Pohon";
+        $data['data_pohons'] = Pohon::with([
+            'jenis_pohon' => function ($query) {
+                $query->orderBy('nama');
+            },
+            'kawasan' => function ($query) {
+                $query->orderBy('nama');
+            },
+            'status_kawasan','pengelola', ])->paginate();
+        
+        return view('master_data.pohon.pilih_profil', $data);
+    }
+
 }

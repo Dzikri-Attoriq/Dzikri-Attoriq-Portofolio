@@ -1,0 +1,154 @@
+    .order-last {
+        font-family: "Poppins", sans-serif;
+    }
+
+    .card-1 {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 12px; 
+    }
+    .card-1 .card-img-top-1 {
+        object-fit: cover;
+        height: 100%; 
+        width: 100%;
+    }
+    .card-1 .top-title-1 {
+        position: absolute;
+        font-style: italic;
+        right: 0;
+        margin: 0;
+        color: white;
+        font-family: "Poppins", sans-serif;
+    }
+    .card-1 .card-title-1 {
+        position: absolute;
+        right: 0;
+        color: white;
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+    }
+    :root {
+    --page-margin: min(2rem, 5vw);
+    color: #444;
+    }
+
+    .section-1 {
+    display: grid;
+    grid-template-columns: var(--page-margin) [center-start] 1fr [center-end] var(--page-margin);
+    
+        & > * {
+            grid-column: center;
+        }
+    }
+
+    .cards-wrapper-1 {
+        grid-column: center-start / -1;
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1rem;
+        overflow: auto;
+        padding-bottom: 1rem;
+        padding-right: var(--page-margin);
+    }
+
+    .cards-wrapper-1::-webkit-scrollbar {
+    width: 0; 
+    }
+
+    /* responsive */
+    @media (max-width: 560px) {
+        .card-1 {
+            min-width: 115px;
+        }
+        .card-1 .top-title-1 {
+            font-size: 6px;
+            bottom: 13px;
+            left: 7px;
+            padding: 5px;
+        }
+        .card-1 .card-title-1 {
+            font-size: 8px;
+            bottom: 5px;
+            left: 7px;
+            padding: 5px;
+        }
+        .order-last {
+            font-size: 8px;
+        }
+        .section-1 {
+            margin-bottom: -20px;
+        }
+    }
+
+    @media (min-width: 561px) and (max-width: 992px) {
+        .card-1 {
+            min-width: 150px;
+        }
+        .card-1 .top-title-1 {
+            font-size: 9px;
+            bottom: 18px;
+            left: 7px;
+            padding: 5px;
+        }
+        .card-1 .card-title-1 {
+            font-size: 12px;
+            bottom: 6px;
+            left: 7px;
+            padding: 5px;
+        }
+        .order-last {
+            font-size: 12px;
+        }
+        .section-1 {
+            margin-bottom: -20px;
+        }
+    }
+
+    @media (min-width: 992px) and (max-width: 1200px) {
+    .card-1 {
+            min-width: 200px;
+        }
+        .card-1 .top-title-1 {
+            font-size: 12px;
+            bottom: 21px;
+            left: 7px;
+            padding: 5px;
+        }
+        .card-1 .card-title-1 {
+            font-size: 15px;
+            bottom: 6px;
+            left: 7px;
+            padding: 5px;
+        }
+        .order-last {
+            font-size: 15px;
+        }
+        .section-1 {
+            margin-bottom: -20px;
+        }
+    }
+
+    @media (min-width: 1201px) {
+        .card-1 {
+            min-width: 260px;
+        }
+        .card-1 .top-title-1 {
+            font-size: 15px;
+            bottom: 24px;
+            left: 7px;
+            padding: 5px;
+        }
+        .card-1 .card-title-1 {
+            font-size: 18px;
+            bottom: 6px;
+            left: 7px;
+            padding: 5px;
+        }
+        .section-1 {
+            margin-bottom: -20px;
+        }
+    }

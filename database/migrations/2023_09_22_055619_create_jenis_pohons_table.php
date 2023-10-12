@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('jenis_pohons', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_pohon', 100)->required()->unique();
             $table->string('nama', 100)->required()->unique();
-            $table->text('deskripsi');
+            $table->text('deskripsi')->required();
+            $table->text('manfaat')->required();
+            $table->enum('status', ['Indoor', 'Outdoor'])->required();
             $table->string('image', 150)->required();
             $table->timestamps();
         });

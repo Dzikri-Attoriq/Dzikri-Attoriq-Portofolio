@@ -10,10 +10,10 @@ class Pohon extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function getRouteKeyName() 
-    {
-        return 'kode_pohon';
-    }
+    // public function getRouteKeyName() 
+    // {
+    //     return 'kode_pohon';
+    // }
 
     public function jenis_pohon()
     {

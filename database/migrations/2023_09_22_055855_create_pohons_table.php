@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pohons', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_pohon', 100)->required()->unique();
             $table->integer('umur_pohon')->required();
             $table->string('koordinat', 100)->required();
             $table->timestamps();

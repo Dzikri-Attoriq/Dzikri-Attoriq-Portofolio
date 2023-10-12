@@ -22,10 +22,21 @@ class AuthController extends Controller
             'email.required' => 'Email Wajib Di Isi.',
             'password.required' => 'Password Wajib Di Isi.',
         ]);
-        if (Auth::attempt($credentials)) {
-            if(Auth::user()->role == '1' || Auth::user()->role == '2') {
+        if (Auth::guard('admin')->attempt($credentials)) {
+            if(Auth::guard('admin')->user()->role == '1') {
                 $request->session()->regenerate();
-                return redirect('/');
+                return redirect('/dashboard-admin');
+            } else {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('login');
+            }
+        }
+        if (Auth::guard('web')->attempt($credentials)) {
+            if(Auth::user()->role == '2') {
+                $request->session()->regenerate();
+                return redirect('/dashboard-user');
             } else {
                 Auth::logout();
                 $request->session()->invalidate();
